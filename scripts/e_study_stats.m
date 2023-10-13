@@ -2,10 +2,10 @@
 % Tutorial HEP Donostia 2023
 % Luis Ciria
 % lciria@ugr.es
-% ------------------------------
+% ------------------------------------------------------------------------------------------
 % HEP stats - Cluster-based non-parametric permutation tests
 % IMPORTANT: How NOT to interpret results from a cluster-based permutation (check this link: https://www.fieldtriptoolbox.org/faq/how_not_to_interpret_results_from_a_cluster-based_permutation_test/#how-not-to-interpret-results-from-a-cluster-based-permutation-test
-% ------------------------------
+% ------------------------------------------------------------------------------------------
 clear
 clc
 close all
@@ -13,27 +13,14 @@ close all
 datapath = '/Users/luisciria/Desktop/CuttingEEG-Donostia HEP Tutorial/heplab/data/clean'; % Data location
 cd(datapath)                                                      % Open data folder
 
-% load HEP data
-load('Data_active_group_timelocked.mat');   % Active participants
-load('Data_inactive_group_timelocked.mat'); % Inactive participants
+% load HEP data 
+load('Data_active_group_timelocked.mat');   % Active participants   - (use supporting file if necessary)
+load('Data_inactive_group_timelocked.mat'); % Inactive participants - (use supporting file if necessary)
 
-% Define study design (for this analisys)
-participants_g1 = 10;
+% Define study design (between groups for this "experiment". 10 participants per group)
+participants_g1 = 10; 
 participants_g2 = 10;
 design = [ones(1,participants_g1) ones(1,participants_g2)*2]; % create the stats design
-
-% Define electrodes' neighbours based on 2D layouts
-% cfg          = [];
-% cfg.layout   = 'biosemi64.lay';
-% cfg.feedback = 'yes';
-% layout       = ft_prepare_layout(cfg);
-% 
-% cfg          = [];
-% cfg.layout   = layout;
-% cfg.method   = 'triangulation';
-% cfg.compress = 'yes';
-% cfg.feedback = 'yes';
-% neighbours   = ft_prepare_neighbours(cfg);
 
 %% configure analysis's parameters
 cfg                     = [];
@@ -55,9 +42,10 @@ cfg.neighbours          = 'biosemi64_neighb.mat';
 
 % run analysis
 [stat]                  = ft_timelockstatistics(cfg, data_active{:}, data_inactive{:});
-save (['HEP_stats_' date '.mat'],'stat');
 
-%% check statistically significat clusters
+save (['HEP_stats_' date '.mat'],'stat'); %save analysis
+
+%% check statistically significat clusters (use supporting file if necessary [HEP_stats.mat])
 % extract positive clusters
 if isfield(stat,'posclusters') % check if there are positive clusters (regardless of their significance)
     sig_clus=find([stat.posclusters(:).prob] < stat.cfg.alpha);  % check how many clusters were "statiscally significant"
@@ -92,19 +80,19 @@ end
   
 %% Cluster plot
 % load grand averages
-load hep_active
-load hep_inactive
+load hep_active     % (use supporting file if necessary)
+load hep_inactive   % (use supporting file if necessary)
 
 %% Plot HEP grand averages - Groups
-cluster_valence    = 'negative'; % cluster to plot ('positive' or 'negative') 
+cluster_valence    = 'positive'; % cluster to plot ('positive' or 'negative') 
 cluster_number     = 1; % cluster to plot (it is possible to have serveral ('statistically significant') clusters)
 
 if cluster_valence == 'negative'
     chan_labels  = chan_neg_labels {1,cluster_number};
-    time_cluster = time_neg {1,cluster_number}
+    time_cluster = time_neg {1,cluster_number};
 elseif cluster_valence == 'positive'
     chan_labels  = chan_pos_labels {1,cluster_number};
-    time_cluster = time_pos {1,cluster_number}
+    time_cluster = time_pos {1,cluster_number};
 else
 end
 

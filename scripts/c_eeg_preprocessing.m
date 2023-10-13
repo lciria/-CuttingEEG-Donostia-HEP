@@ -2,11 +2,11 @@
 % Tutorial HEP Donostia 2023
 % Luis Ciria
 % lciria@ugr.es
-% ------------------------------
+% ------------------------------------------------------------------------------------------
 % EEG preprocessing for HEP (use your own steps - no particular specifications apart from CFA)
 % For example: filtering ---> bad channels removal ---> ICA ---> bad channels interpolation ---> bad trials rejection --->
 %baseline correction ---> re-referencing
-% ------------------------------
+% ------------------------------------------------------------------------------------------
 clear
 clc
 close all
@@ -15,7 +15,7 @@ datapath = '/Users/luisciria/Desktop/CuttingEEG-Donostia HEP Tutorial/heplab/dat
 cd(datapath)                                                      % Open data folder
 
 % load the raw EEG file
-load('ENT_1_rawEEG_newEvents.mat');
+load('ENT_1_rawEEG_newEvents.mat'); % (use supporting file if necessary)
 
 % basic EEG preprocessing for fast plot
 cfg           = [];
@@ -108,7 +108,7 @@ figure; ft_multiplotER(cfg, hepdata);
 title('ECG','FontSize',12)
 
 
-%%
+%% ------------------------------------------------------------------------------------------
 % Visualization of the component time courses (after ICA) to remove cardiac field artifact (CFA)
 % ------------------------------
 clear

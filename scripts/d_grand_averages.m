@@ -2,11 +2,11 @@
 % Tutorial HEP Donostia 2023
 % Luis Ciria
 % lciria@ugr.es
-% ------------------------------
+% ------------------------------------------------------------------------------------------
 % HEP Grand averages + Plot
 % Parametric and non-parametric statistics on event-related fields
 % https://www.fieldtriptoolbox.org/tutorial/eventrelatedstatistics/
-% ------------------------------
+% ------------------------------------------------------------------------------------------
 clear
 clc
 close all
@@ -24,7 +24,6 @@ for i=1:length(datasets)
     load(datasets(i).name);  % load the EEG file
     cfg         = [];
     cfg.dataset = datasets(i).name;
-    
     cfg.demean          = 'yes';
     cfg.baselinewindow  = [-0.2 0];
     data = ft_preprocessing(cfg,data);
@@ -95,4 +94,3 @@ ylabel('Volatage (?V)')
 %xline(0,'--');
 legend('Active group','Inactive group')
 title('ECG','FontSize',12)
-
